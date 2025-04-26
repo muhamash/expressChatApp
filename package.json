@@ -1,11 +1,16 @@
 {
   "name": "expressChatAppFullStack",
   "version": "1.0.0",
-  "description": "simple full stack chat app",
+  "description": "simple full stack chat app with express and socket.io",
   "main": "index.js",
   "repository": "https://github.com/muhamash/expressChatApp.git",
   "author": "Md Ashraful Alam",
   "license": "MIT",
+  "scripts": {
+    "start": "NODE_ENV=production node index.js",
+    "dev": "NODE_ENV=development nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.7",
