@@ -1,0 +1,21 @@
+{
+  "name": "expressChatAppFullStack",
+  "version": "1.0.0",
+  "description": "simple full stack chat app",
+  "main": "index.js",
+  "repository": "https://github.com/muhamash/expressChatApp.git",
+  "author": "Md Ashraful Alam",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^16.5.0",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-validator": "^7.2.1",
+    "http-errors": "^2.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.14.0",
+    "multer": "^1.4.5-lts.2"
+  }
+}
