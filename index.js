@@ -4,6 +4,9 @@ const mongoose = require( 'mongoose' );
 const path = require( 'path' );
 const cookieParser = require( 'cookie-parser' );
 const { notFoundHandler, errorHandlers } = require( './middlewares/common/errorHandler' );
+const loginRouter = require( './router/loginRouter' );
+const inboxRouter = require( './router/inboxRoute' );
+const usersRouter = require( './router/usersRouter' );
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -32,6 +35,9 @@ app.use( express.static( path.join( __dirname, 'public' ) ) );
 app.use( cookieParser( process.env.COOKIE_SECRET ) );
 
 // routes
+app.use( '/', loginRouter );
+app.use( '/users', usersRouter );
+app.use( '/inbox', inboxRouter );
 
 // 404 not found handler
 app.use( notFoundHandler );
