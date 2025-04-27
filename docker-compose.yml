@@ -1,0 +1,25 @@
+version: '1.0'
+services:
+  app:
+    container_name: expressJs-chat-app
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+    environment:
+      - ENV_VAR_NAME=value
+    networks:
+      - expressJs-chat-network
+  db:
+   image: mongodb:latest
+   ports:
+     - "27017:27017"
+  #  volumes:
+  #    - db-data:/data/db
+   networks:
+     - expressJs-chat-network
+
+networks:
+  expressJs-chat-network:
+    driver: bridge 

@@ -66,7 +66,10 @@ async function addUser ( req, res, next )
         }
         else
         {
-            res.type( 'txt' ).send( result );
+            res.type( 'txt' ).send( json.stringify( {
+                message: "User was added successfully!",
+                data: result,
+            } ) );
         }
     }
     catch ( error )
@@ -114,7 +117,10 @@ async function deleteUser ( req, res, next )
         }
         else
         {
-            res.type( 'txt' ).send( {message : 'user deleted', userId } );
+            res.type( 'txt' ).send( json.stringify( {
+                message: "User was deleted successfully!",
+                userId,
+            } ) );
         }
     }
     catch ( error )
@@ -134,4 +140,5 @@ async function deleteUser ( req, res, next )
 module.exports = {
     getUsers,
     addUser,
+    deleteUser
 }
