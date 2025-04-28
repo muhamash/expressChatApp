@@ -1,5 +1,5 @@
 const express = require( 'express' );
-const { getUsers, addUser, deleteUser } = require( '../controller/usersController' );
+const { getUsers, deleteUser, addUser } = require( '../controller/usersController' );
 const decorateHtml = require( '../middlewares/common/decorateHtmlRes' );
 const avatarUpload = require( '../middlewares/users/userAvatarUpload' );
 const { userValidators, userValidationHandler } = require( '../middlewares/users/userValidators' );

@@ -11,7 +11,7 @@ function avatarUpload(req, res, next) {
   // call the middleware function
     upload.any()( req, res, ( err ) =>
     {
-        console.log( "req.files: ", req.files );
+        // console.log( "req.files: ", req.files );
         if ( err )
         {
             res.status( 500 ).json( {

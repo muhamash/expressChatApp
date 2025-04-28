@@ -2,6 +2,7 @@ const { check, validationResult } = require( 'express-validator' );
 const User = require( '../../models/users' );
 const path = require( 'path' );
 const createError = require( 'http-errors' );
+const { unlink } = require( 'fs' );
 
 const userValidators = [
     check( 'name' ).isLength( { min: 1 } ).isAlpha( 'en-US', { ignore: "-" } ).withMessage( "Name field is required and must contain alphabet" ).trim(),
@@ -36,22 +37,14 @@ const userValidators = [
         }
     }
     ),
-    check( 'password' ).isLength( { min: 6 } ).withMessage( "Password must be at least 6 characters long" ).trim(),
-    // check( 'confirmPassword' ).custom( ( value, { req } ) =>
-    // {
-    //     if ( value !== req.body.password )
-    //     {
-    //         throw createError( "Password confirmation does not match password" );
-    //     }
-    //     return true;
-    // } ),
+    check( 'password' ).isLength( { min: 6 } ).withMessage( "Password must be at least 6 characters long" ).trim()
 ];
 
 const userValidationHandler = ( req, res, next ) =>
 {
     const errors = validationResult( req );
     const mappedErrors = errors.mapped();
-    console.log( "Mapped Errors: ", mappedErrors );
+    // console.log( "Mapped Errors: ", mappedErrors );
 
     if(Object.keys( mappedErrors ).length === 0)
     {
@@ -73,7 +66,7 @@ const userValidationHandler = ( req, res, next ) =>
             } );
         }
 
-        return res.status( 500 ).json( {
+        return res.status( 400 ).json( {
             errors: mappedErrors,
         } );
     }

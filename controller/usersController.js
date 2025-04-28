@@ -1,4 +1,4 @@
-const bycrypt = require( 'bcrypt' );
+const bcrypt = require( 'bcrypt' );
 const { unlink } = require( 'fs' );
 const path = require( 'path' );
 const User = require( '../models/users' );
@@ -30,9 +30,13 @@ async function getUsers ( req, res, next )
     }
 }
 
-async function addUser(req, res, next) {
+async function addUser ( req, res, next )
+{
   let newUser;
   const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
+  console.log("AddUser route hit");
+  // console.log( "Request Body:", req.body );
 
   if (req.files && req.files.length > 0) {
     newUser = new User({
@@ -40,7 +44,9 @@ async function addUser(req, res, next) {
       avatar: req.files[0].filename,
       password: hashedPassword,
     });
-  } else {
+  }
+  else
+  {
     newUser = new User({
       ...req.body,
       password: hashedPassword,
@@ -49,25 +55,21 @@ async function addUser(req, res, next) {
 
   // save user or send error
   try {
-      const result = await newUser.save();
-      console.log(result, newUser);
-      res.status( 200 ).json( {
-          message: "User was added successfully!",
-      } );
-  } catch ( err )
-  {
-      console.log( err );
-      res.status( 500 ).json( {
-          errors: {
-              common: {
-                  msg: "Unknown error occured!",
-              },
-          },
-      } );
+    const result = await newUser.save();
+    res.status(200).json({
+      message: "User was added successfully!",
+    });
+  } catch (err) {
+    res.status(500).json({
+      errors: {
+        common: {
+          msg: "Unknown error occured!",
+        },
+      },
+    });
   }
-};
+}
 
-// remove user
 async function deleteUser(req, res, next) {
   try {
     const user = await User.findByIdAndDelete({
@@ -99,63 +101,51 @@ async function deleteUser(req, res, next) {
 };
 
 
-// async function addUser ( req, res, next )
-// {
-//     let newUser;
-//     const hashedPassword = await bcrypt.hash( req.body.password, 10 );
+// async function addUser(req, res, next) {
+//   let newUser;
+//   const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
-//     if (req.files && req.files.length > 0) {
-//         newUser = new User( {
-//             ...req.body,
-//             avatar: req.files[ 0 ]?.filename || "",
-//             password: hashedPassword,
-//         } );
-//     }
-//     else
-//     {
-//         newUser = new User( {
-//             ...req.body,
-//             password: hashedPassword,
-//         } );
-//     };
+//   if (req.file) { 
+//     newUser = new User({
+//       ...req.body,
+//       avatar: req.file.filename,
+//       password: hashedPassword,
+//     });
+//   } else {
+//     newUser = new User({
+//       ...req.body,
+//       password: hashedPassword,
+//     });
+//   }
 
-//     try
-//     {
-//         const result = await newUser.save();
-
-//         if (req.accepts('html')) {
-//             const users = await User.find();
-//             console.log( users, result, newUser );
-//             res.render('users', { users });
-//         }
-//         else if ( req.accepts( 'json' ) )
-//         {
-//             console.log( users, result, newUser );
-//             res.status( 200 ).json( {
-//                 message: "User was added successfully!",
-//                 data: result,
-//             } );
-//         }
-//         else
-//         {
-//             res.type( 'txt' ).send( JSON.stringify( {
-//                 message: "User was added successfully!",
-//                 data: result,
-//             } ) );
-//         }
+//   try {
+//     const result = await newUser.save();
+//     if (req.accepts('html')) {
+//       const users = await User.find();
+//       // res.render( 'users', { users } );
+//       res.redirect('/users');
+//     } else if (req.accepts('json')) {
+//       res.status(200).json({
+//         message: "User was added successfully!",
+//         data: result,
+//       });
+//     } else {
+//       res.type('txt').send(JSON.stringify({
+//         message: "User was added successfully!",
+//         data: result,
+//       }));
 //     }
-//     catch ( error )
-//     {
-//         res.status( 500 ).json( {
-//             errors: {
-//                 common: {
-//                     message: "Unknown error occurred!",
-//                 },
-//                 message: error?.message || error?.toString(),
-//             },
-//         } );
-//     }
-// }
+//   } catch (error) {
+//     res.status(500).json({
+//       errors: {
+//         common: {
+//           message: "Unknown error occurred!",
+//         },
+//         message: error?.message || error?.toString(),
+//       },
+//     });
+//   }
+// };
 
 // async function deleteUser ( req, res, next )
 // {
