@@ -1,15 +1,16 @@
 version: '3'
 services:
   app:
-    container_name: expressJs-chat-app
+    container_name: expressJs-chat-app-dev
     build: .
     ports:
-      - "8080:3000"   # HOST:CONTAINER
-    # ─────── remove this bind-mount in prod ───────
-    # volumes:
-    #   - .:/app
+      - "8080:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules   # keep container’s modules separate
+    command: npm run dev
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
       - PORT=3000
       - MONGODB_URI=mongodb://db:27017/expressChat
       - COOKIE_SECRET=mysecretcookie
@@ -21,7 +22,7 @@ services:
 
   db:
     image: mongo:latest
-    container_name: mongo-db
+    container_name: mongo-db-dev
     ports:
       - "27017:27017"
     networks:

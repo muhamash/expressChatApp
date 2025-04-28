@@ -1,19 +1,22 @@
-# official Node.js image
+# Base Node.js image
 FROM node:20
 
 # Create app directory
 WORKDIR /app
 
-# Install app dependencies separately
+# Only copy package.json and package-lock.json first
 COPY package.json package-lock.json ./
-RUN npm install
 
-# Bundle app source
+# Install dependencies INSIDE Docker
+RUN npm install --production
+
+# Now copy rest of the source code
 COPY . .
 
-# Build the app (if needed — not needed for pure Express app usually)
 # RUN npm run build
 
+# create uploads directory into public folder
+RUN mkdir -p public/uploads
 # Expose app port
 EXPOSE 3000
 
