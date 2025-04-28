@@ -1,25 +1,31 @@
-version: '1.0'
+version: '3'
 services:
   app:
     container_name: expressJs-chat-app
     build: .
     ports:
-      - "8080:8080"
+      - "8080:3000"   # HOST:CONTAINER
     volumes:
       - .:/app
     environment:
-      - ENV_VAR_NAME=value
+      - NODE_ENV=production
+      - PORT=3000
+      - MONGODB_URI=mongodb://db:27017/expressChat
+      - COOKIE_SECRET=mysecretcookie
+      - JWT_EXPIRATION=1h
+    depends_on:
+      - db
     networks:
       - expressJs-chat-network
+
   db:
-   image: mongodb:latest
-   ports:
-     - "27017:27017"
-  #  volumes:
-  #    - db-data:/data/db
-   networks:
-     - expressJs-chat-network
+    image: mongo:latest
+    container_name: mongo-db
+    ports:
+      - "27017:27017"
+    networks:
+      - expressJs-chat-network
 
 networks:
   expressJs-chat-network:
-    driver: bridge 
+    driver: bridge
