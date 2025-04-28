@@ -51,17 +51,10 @@ const userValidationHandler = ( req, res, next ) =>
 {
     const errors = validationResult( req );
     const mappedErrors = errors.mapped();
-    // if ( !errors.isEmpty() )
-    // {
-    //     return res.status( 422 ).json( {
-    //         errors: errors.array(),
-    //     } );
-    // } 
+    console.log( "Mapped Errors: ", mappedErrors );
+
     if(Object.keys( mappedErrors ).length === 0)
     {
-        // return res.status( 422 ).json( {
-        //     errors: mappedErrors,
-        // } );
         next();
     }
     else
@@ -79,11 +72,11 @@ const userValidationHandler = ( req, res, next ) =>
                 }
             } );
         }
-    }
 
-    return res.status( 500 ).json( {
-        errors: mappedErrors,
-    } );
+        return res.status( 500 ).json( {
+            errors: mappedErrors,
+        } );
+    }
 }
 
 module.exports = { userValidators, userValidationHandler };
