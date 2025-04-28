@@ -2,13 +2,16 @@ version: '3'
 services:
   app:
     container_name: expressJs-chat-app-dev
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile        # your existing Dockerfile
     ports:
       - "8080:3000"
     volumes:
-      - .:/app
-      - /app/node_modules   # keep container’s modules separate
-    command: npm run dev
+      - .:/app                     # bind your code in
+      - /app/node_modules         # keep the container’s modules
+    # install ALL deps (including nodemon) then start in dev
+    entrypoint: sh -c "npm install && npm run dev"
     environment:
       - NODE_ENV=development
       - PORT=3000
