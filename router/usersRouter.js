@@ -1,9 +1,13 @@
 const express = require( 'express' );
-const { getUsers } = require( '../controller/usersController' );
+const { getUsers, addUser } = require( '../controller/usersController' );
 const decorateHtml = require( '../middlewares/common/decorateHtmlRes' );
+const avatarUpload = require( '../middlewares/users/userAvatarUpload' );
+const { userValidators, userValidationHandler } = require( '../middlewares/users/userValidators' );
 
 const router = express.Router();
 
-router.get( '/', decorateHtml("Users Page") ,getUsers );
+router.get( '/', decorateHtml( "Users Page" ), getUsers );
 
-module.exports = router;
+router.post( '/', avatarUpload, userValidators, userValidationHandler, addUser );
+  
+module.exports = router; 

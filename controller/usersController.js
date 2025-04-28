@@ -1,14 +1,14 @@
 const bycrypt = require( 'bcrypt' );
 const { unlink } = require( 'fs' );
 const path = require( 'path' );
-const { User } = require( '../models/users' );
+const User = require( '../models/users' );
 
 async function getUsers ( req, res, next )
 {
     try
     {
         const users = await User.find();
-        console.log( users );
+        // console.log( users );
 
         if (req.accepts('html')) {
             res.render( 'users', { users });
@@ -25,6 +25,7 @@ async function getUsers ( req, res, next )
 
     } catch ( error )
     {
+        console.log( error );
         next( error );
     }
 }
@@ -66,7 +67,7 @@ async function addUser ( req, res, next )
         }
         else
         {
-            res.type( 'txt' ).send( json.stringify( {
+            res.type( 'txt' ).send( JSON.stringify( {
                 message: "User was added successfully!",
                 data: result,
             } ) );
@@ -82,13 +83,12 @@ async function addUser ( req, res, next )
                 message: error?.message || error?.toString(),
             },
         } );
-        next( error );
     }
-};
+}
 
 async function deleteUser ( req, res, next )
 {
-    const userId = req.param?.id;
+    const userId = req.params.id;
     try
     {
         const user = await User.findByIdAndDelete( { _id: userId } );
@@ -117,7 +117,7 @@ async function deleteUser ( req, res, next )
         }
         else
         {
-            res.type( 'txt' ).send( json.stringify( {
+            res.type( 'txt' ).send( JSON.stringify( {
                 message: "User was deleted successfully!",
                 userId,
             } ) );
@@ -133,7 +133,7 @@ async function deleteUser ( req, res, next )
                 message: error?.message || error?.toString(),
             },
         } );
-        next( error );
+        // next( error );
     }
 }
 
