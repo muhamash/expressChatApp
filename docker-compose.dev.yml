@@ -17,7 +17,7 @@ services:
       - PORT=3000
       - MONGODB_URI=mongodb://db:27017/expressChat
       - COOKIE_SECRET=mysecretcookie
-      - JWT_EXPIRATION=1h
+      - JWT_EXPIRATION=100000
     depends_on:
       - db
     networks:

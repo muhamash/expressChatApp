@@ -22,11 +22,8 @@ async function postLogin ( req, res, next )
 { 
     try
     {
-        const user = await User.findOne( { 
-            $or: { 
-                email: req.body.username, 
-                mobile: req.body.username 
-            }
+        const user = await User.findOne( {
+            $or: [ { email: req.body.username }, { mobile: req.body.username } ],
         } );
         
         console.log( "User: ", user );
@@ -68,19 +65,17 @@ async function postLogin ( req, res, next )
             throw createError( 401, "Login Failed!!" );
         }
     }
-    catch ( error )
-    {
-        console.log( error );
-        // next( error );
-        res.render( 'index',
-            {
-                data: {
-                    username: req.body.username,
-                }
+    catch (err) {
+        res.render( "index", {
+            data: {
+                username: req.body.username,
             },
-            {
-                error: error.message
-            } );
+            errors: {
+                common: {
+                    msg: err.message,
+                },
+            },
+        } );
     };
 }; 
 
