@@ -46,7 +46,7 @@ async function postLogin ( req, res, next )
 
                 // token generation
                 const token = await jwt.sign( userObject, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION } );
-                console.log( "Token: ", token );
+                // console.log( "Token: ", token );
                  
                 // set cookie
                 res.cookie( process.env.COOKIE_NAME, token, { maxAge: process.env.JWT_EXPIRATION, httpOnly: true, signed: true } );

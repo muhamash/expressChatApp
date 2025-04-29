@@ -9,9 +9,10 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
+
     "docker:dev": "docker-compose -f docker-compose.dev.yml up --build",
     "docker:log": "docker-compose -f docker-compose.dev.yml logs -f app",
-    "app:start": "yarn run docker:dev && yarn run docker:log",
+    "app:dev": "yarn run docker:dev && yarn run docker:log",
     "docker:prod": "docker-compose up --build -d",
     "docker:down": "docker-compose down --volumes --remove-orphans",
 
