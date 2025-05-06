@@ -16,6 +16,7 @@ const checkLogin = ( req, res, next ) =>
             // pass user info to response locals
             if ( res.locals.html )
             {
+                console.log( decoded );
                 res.locals.loggedInUser = decoded;
             }
             next();

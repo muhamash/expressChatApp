@@ -17,7 +17,7 @@ function getLogin ( req, res, next )
         res.type('txt').send('This route is for login.');
     }
 }
-
+ 
 async function postLogin ( req, res, next )
 { 
     try
@@ -52,6 +52,7 @@ async function postLogin ( req, res, next )
                 res.cookie( process.env.COOKIE_NAME, token, { maxAge: process.env.JWT_EXPIRATION, httpOnly: true, signed: true } );
 
                 res.locals.loggedInUser = userObject;
+                console.log( res.locals );
 
                 res.render( 'inbox' );
             }

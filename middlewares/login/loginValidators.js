@@ -13,7 +13,7 @@ const loginValidationHandler = ( req, res, next ) =>
     if( Object.keys( mappedErrors ).length === 0 )
     {
         next();
-    }
+    } 
     else
     {
         res.render('index', {

@@ -3,10 +3,11 @@ const { getUsers, deleteUser, addUser } = require( '../controller/usersControlle
 const decorateHtml = require( '../middlewares/common/decorateHtmlRes' );
 const avatarUpload = require( '../middlewares/users/userAvatarUpload' );
 const { userValidators, userValidationHandler } = require( '../middlewares/users/userValidators' );
+const { checkLogin } = require( '../middlewares/common/checkLogin' );
 
 const router = express.Router();
 
-router.get( '/', decorateHtml( "Users Page" ), getUsers );
+router.get( '/', decorateHtml( "Users Page" ),checkLogin, getUsers );
 
 router.post( '/', avatarUpload, userValidators, userValidationHandler, addUser );
 

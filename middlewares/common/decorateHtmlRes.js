@@ -13,4 +13,4 @@ function decorateHtml(title) {
     };
 }
 
-module.exports = decorateHtml;
+module.exports = decorateHtml; 
