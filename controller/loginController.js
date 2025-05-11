@@ -26,7 +26,7 @@ async function postLogin ( req, res, next )
             $or: [ { email: req.body.username }, { mobile: req.body.username } ],
         } );
         
-        console.log( "User: ", user );
+        // console.log( "User: ", user );
         if ( user && user._id )
         {
             const isValidPassword = await bcrypt.compare( req.body.password, user.password );
@@ -52,7 +52,7 @@ async function postLogin ( req, res, next )
                 res.cookie( process.env.COOKIE_NAME, token, { maxAge: process.env.JWT_EXPIRATION, httpOnly: true, signed: true } );
 
                 res.locals.loggedInUser = userObject;
-                console.log( res.locals );
+                // console.log( res.locals );
 
                 res.render( 'inbox' );
             }

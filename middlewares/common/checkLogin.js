@@ -16,7 +16,7 @@ const checkLogin = ( req, res, next ) =>
             // pass user info to response locals
             if ( res.locals.html )
             {
-                console.log( decoded );
+                // console.log( decoded );
                 res.locals.loggedInUser = decoded;
             }
             next();
@@ -50,24 +50,22 @@ const checkLogin = ( req, res, next ) =>
     }
 };
 
-const redirectLoggedIn = ( req, res, next ) =>
+
+const redirectIfLoggedIn = ( req, res, next ) =>
 {
     let cookies =
         Object.keys( req.signedCookies ).length > 0 ? req.signedCookies : null;
 
-    console.log( "Cookies: ", cookies );
-    if ( cookies )
-    {
-        res.redirect( "/inbox" );
-       
-    } else
+    if ( !cookies )
     {
         next();
-        
+    } else
+    {
+        res.redirect( "/inbox" );
     }
 };
 
 module.exports = {
     checkLogin,
-    redirectLoggedIn,
+    redirectIfLoggedIn,
 };
